@@ -15,46 +15,48 @@
         <hr>
         <h1>Create New Product</h1>
         <hr>
-        <form action="https://myautobill-production-e577.up.railway.app/product" method="POST">
+        <form id="productForm" action="https://myautobill-production-e577.up.railway.app/product" method="POST" onsubmit="return back()">
             <div class="form-group">
-                <label for="exampleInputPassword1">ID</label>
-                <input class="form-control" name="id">
+                <label for="id">ID</label>
+                <input class="form-control" id="id" name="id" required>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputPassword1">Name</label>
-                <input class="form-control" name="name">
+                <label for="name">Name</label>
+                <input class="form-control" id="name" name="name" required>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputPassword1">Price</label>
-                <input type="number" class="form-control" name="price">
+                <label for="price">Price</label>
+                <input type="number" class="form-control" id="price" name="price" required>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputPassword1">Unit</label>
-                <input class="form-control" name="unit">
+                <label for="unit">Unit</label>
+                <input class="form-control" id="unit" name="unit" required>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputPassword1">Unit Taken</label>
-                <input type="number" class="form-control" name="taken">
+                <label for="taken">Unit Taken</label>
+                <input type="number" class="form-control" id="taken" name="taken" required>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputPassword1">Payable</label>
-                <input type="number" class="form-control" name="payable">
+                <label for="payable">Payable</label>
+                <input type="number" class="form-control" id="payable" name="payable" required>
             </div>
 
-            <button type="submit" class="btn btn-primary" onsubmit="back()">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-
     </div>
+
+    <script>
+        function back() {
+            // Optionally handle redirect logic after form submission
+            window.location.href = 'https://assettracker.cf/checkout/addBook.html';
+            return false; // Prevent form submission for testing purposes
+        }
+    </script>
 </body>
-<script>
-    function back() {
-        window.location.href = 'https://assettracker.cf/checkout/addBook.html';
-    }
-</script>
 
 </html>
