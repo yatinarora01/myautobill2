@@ -15,64 +15,64 @@
         <hr>
         <h1>Create New Product</h1>
         <hr>
-        <form id="productForm">
+        <form id="productForm" action="https://myautobill-production-e577.up.railway.app/product" method="POST">
             <div class="form-group">
-                <label for="exampleInputPassword1">ID</label>
+                <label for="id">ID</label>
                 <input class="form-control" name="id" required>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputPassword1">Name</label>
+                <label for="name">Name</label>
                 <input class="form-control" name="name" required>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputPassword1">Price</label>
+                <label for="price">Price</label>
                 <input type="number" class="form-control" name="price" required>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputPassword1">Unit</label>
+                <label for="unit">Unit</label>
                 <input class="form-control" name="unit" required>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputPassword1">Unit Taken</label>
+                <label for="taken">Unit Taken</label>
                 <input type="number" class="form-control" name="taken" required>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputPassword1">Payable</label>
+                <label for="payable">Payable</label>
                 <input type="number" class="form-control" name="payable" required>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-
-        <div id="message" style="margin-top: 20px; display: none;"></div>
     </div>
 
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        const API_URL = "https://myautobill-production-e577.up.railway.app/product";
+        document.getElementById('productForm').onsubmit = function(event) {
+            event.preventDefault(); // Prevent default form submission
 
-        document.getElementById('productForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the form from submitting the default way
             const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
 
-            axios.post(API_URL, data)
-                .then(response => {
-                    document.getElementById('message').innerHTML = "Product added successfully!";
-                    document.getElementById('message').style.display = 'block';
-                    this.reset(); // Reset the form after successful submission
-                })
-                .catch(error => {
-                    document.getElementById('message').innerHTML = "Error adding product.";
-                    document.getElementById('message').style.display = 'block';
-                    console.error("Error adding product:", error);
-                });
-        });
+            // Submit the form data using fetch or axios
+            fetch('https://myautobill-production-e577.up.railway.app/product', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Redirect to the checkout page after successful submission
+                    window.location.href = 'https://assettracker.cf/checkout/addBook.html';
+                } else {
+                    console.error('Error:', response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        };
     </script>
 </body>
 
