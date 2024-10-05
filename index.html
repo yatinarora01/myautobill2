@@ -15,55 +15,46 @@
 </head>
 
 <body>
-    <!--Animation-->
+    <!-- Animation -->
     <div class="lottie" id="1">
         <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_jioazy9u.json" background="transparent" speed="1" loop autoplay></lottie-player>
         <div class="text">PLACE ITEMS TO START CHECKOUT</div>
     </div>
 
-    <!--Product List Container-->
-    <div id="product-list">
-        <!-- Products will be loaded here -->
-    </div>
-
-    <!--Main-->
+    <!-- Main -->
     <main id="home">
-        <!-- Products will be loaded here -->
+        <div id="product-list"></div>
     </main>
 
-    <!--Checkout Button-->
+    <!-- Checkout Button -->
     <div id="final">
         <button id="2" class="checkout" onclick="checkout()">CHECKOUT</button>
     </div>
 
-    <!--QR code-->
+    <!-- QR code -->
     <div id="qr" class="animated fadeInUp Once" style="display: none;">
         Scan QR Code To Pay
         <img id="image" src="" />
     </div>
 
-    <!--Success-->
+    <!-- Success -->
     <div id="success" style="display: none;">
         <lottie-player src="https://assets7.lottiefiles.com/private_files/lf30_poez9ped.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
     </div>
 
-    <!--API data update listener-->
+    <!-- API data update listener -->
     <script>
         const API_URL = "https://myautobill-production-e577.up.railway.app/product";
 
         const loadProducts = async () => {
-            // Display loading message
-            const productList = document.getElementById('product-list');
-            productList.innerHTML = '<p>Loading products...</p>';
-
             try {
                 const response = await axios.get(API_URL);
                 const products = response.data;
 
                 // Clear the current product list
+                const productList = document.getElementById('product-list');
                 productList.innerHTML = ''; // Clear existing products
 
-                // Check if products are returned
                 if (!products || products.length === 0) {
                     productList.innerHTML = '<p>No products available</p>';
                     return;
@@ -83,18 +74,15 @@
                 });
             } catch (error) {
                 console.error('Error loading products:', error);
-                productList.innerHTML = '<p>Error loading products. Please try again later.</p>';
             }
         };
 
         const checkout = () => {
-            // Handle checkout process here
-            alert("Checkout initiated!"); // Replace this with your actual checkout logic
-            // Example: Redirect to checkout page
-            // window.location.href = 'checkout.html';
+            document.getElementById('qr').style.display = 'block';
+            document.getElementById('success').style.display = 'block';
+            alert("Checkout initiated!");
         };
 
-        // Load products on page load
         window.onload = () => {
             loadProducts(); // Load products on page load
             setInterval(loadProducts, 10000); // Reload products every 10 seconds
