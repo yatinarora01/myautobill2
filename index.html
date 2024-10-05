@@ -8,6 +8,7 @@
     <title>Automatic Billing</title>
 
     <link rel="stylesheet" href="asset/css/style.css">
+
     <script src="asset/scripts/script.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -15,80 +16,61 @@
 </head>
 
 <body>
-    <!-- Animation -->
+    <!--Animation-->
     <div class="lottie" id="1">
         <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_jioazy9u.json" background="transparent" speed="1" loop autoplay></lottie-player>
         <div class="text">PLACE ITEMS TO START CHECKOUT</div>
     </div>
 
-    <!-- Main -->
+    <!--Main-->
     <main id="home">
-        <div id="product-list"></div>
+
     </main>
 
-    <!-- Checkout Button -->
+    <!--Checkout Button-->
     <div id="final">
         <button id="2" class="checkout" onclick="checkout()">CHECKOUT</button>
     </div>
 
-    <!-- QR code -->
-    <div id="qr" class="animated fadeInUp Once" style="display: none;">
+    <!--QR code-->
+    <div id="qr" class="animated fadeInUp Once">
         Scan QR Code To Pay
         <img id="image" src="" />
     </div>
 
-    <!-- Success -->
-    <div id="success" style="display: none;">
+    <!--Success-->
+    <div id="success">
         <lottie-player src="https://assets7.lottiefiles.com/private_files/lf30_poez9ped.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
     </div>
 
-    <!-- API data update listener -->
+    <!--API data update listener-->
     <script>
-        const API_URL = "https://myautobill-production-e577.up.railway.app/product";
-
-        const loadProducts = async () => {
-            try {
-                const response = await axios.get(API_URL);
-                const products = response.data;
-
-                // Clear the current product list
-                const productList = document.getElementById('product-list');
-                productList.innerHTML = ''; // Clear existing products
-
-                if (!products || products.length === 0) {
-                    productList.innerHTML = '<p>No products available</p>';
-                    return;
-                }
-
-                // Display products
-                products.forEach(product => {
-                    const productItem = document.createElement('div');
-                    productItem.className = 'product-item';
-                    productItem.innerHTML = `
-                        <h3>${product.name}</h3>
-                        <p>Price: $${product.price.toFixed(2)}</p>
-                        <p>Units Available: ${product.taken} ${product.unit}</p>
-                        <p>Total Payable: $${product.payable.toFixed(2)}</p>
-                    `;
-                    productList.appendChild(productItem);
-                });
-            } catch (error) {
-                console.error('Error loading products:', error);
-            }
-        };
-
-        const checkout = () => {
-            document.getElementById('qr').style.display = 'block';
-            document.getElementById('success').style.display = 'block';
-            alert("Checkout initiated!");
-        };
+        const backendUrl = 'https://myautobill-production-e577.up.railway.app';
 
         window.onload = () => {
-            loadProducts(); // Load products on page load
-            setInterval(loadProducts, 10000); // Reload products every 10 seconds
-        };
-    </script>
+            setInterval(function() {
+                loadProducts();
+            }, 100);
+        }
 
+        function loadProducts() {
+            axios.get(`${backendUrl}/your-api-endpoint`) // Replace 'your-api-endpoint' with your actual endpoint
+                .then(response => {
+                    const products = response.data;
+                    // Process and display the products as needed
+                    console.log(products);
+                })
+                .catch(error => {
+                    console.error('Error fetching products:', error);
+                });
+        }
+
+        function checkout() {
+            // Handle checkout logic here
+            console.log("Checkout initiated");
+            // Optionally, you can call another API endpoint here
+        }
+    </script>
 </body>
 
 </html>
