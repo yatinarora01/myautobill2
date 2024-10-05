@@ -8,7 +8,6 @@
     <title>Automatic Billing</title>
 
     <link rel="stylesheet" href="asset/css/style.css">
-
     <script src="asset/scripts/script.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -33,13 +32,13 @@
     </div>
 
     <!--QR code-->
-    <div id="qr" class="animated fadeInUp Once">
+    <div id="qr" class="animated fadeInUp Once" style="display: none;">
         Scan QR Code To Pay
         <img id="image" src="" />
     </div>
 
     <!--Success-->
-    <div id="success">
+    <div id="success" style="display: none;">
         <lottie-player src="https://assets7.lottiefiles.com/private_files/lf30_poez9ped.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
     </div>
 
@@ -54,9 +53,14 @@
                     const productContainer = document.getElementById('home');
                     productContainer.innerHTML = ''; // Clear previous products
 
+                    if (products.length === 0) {
+                        productContainer.innerHTML = '<p>No products available.</p>';
+                        return;
+                    }
+
                     products.forEach(product => {
                         const productDiv = document.createElement('div');
-                        productDiv.innerHTML = `<p>${product.name} - $${product.price}</p>`;
+                        productDiv.innerHTML = `<p>${product.name} - $${product.price} (ID: ${product.id})</p>`;
                         productContainer.appendChild(productDiv);
                     });
                 })
@@ -65,11 +69,15 @@
 
         function checkout() {
             // Handle checkout logic here
+            // For example, display the QR code and success message after checkout
+            document.getElementById('qr').style.display = 'block';
+            document.getElementById('success').style.display = 'block';
             alert("Checkout clicked!");
         }
 
         window.onload = () => {
-            setInterval(loadProducts, 1000); // Load products every second
+            loadProducts(); // Initial load
+            setInterval(loadProducts, 10000); // Load products every 10 seconds
         }
     </script>
 
